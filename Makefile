@@ -1,12 +1,13 @@
 CXX = g++
-CXXFLAGS = -std=c++11
-TARGET = main
-SRC = main.cpp
+CXXFLAGS = -Wall -Werror -std=c++17
 
-all: $(TARGET)
+all: firstfit bestfit
 
-$(TARGET): $(SRC)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
+firstfit: src/main.cpp src/Loader.cpp
+	$(CXX) $(CXXFLAGS) -o firstfit src/main.cpp src/Loader.cpp
+
+bestfit: src/main.cpp src/Loader.cpp
+	$(CXX) $(CXXFLAGS) -o bestfit src/main.cpp src/Loader.cpp
 
 clean:
-	rm -f $(TARGET)
+	rm -f firstfit bestfit
