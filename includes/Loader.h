@@ -1,29 +1,19 @@
-#ifndef FILE_READER_H
-#define FILE_READER_H
-
-#include <string>
+#ifndef LOADER_H
+#define LOADER_H
+//include statements (system)
 #include <iostream>
-#include <queue>
 #include <fstream>
-#include <vector>
-#include <algorithm>
-#include <map>
-#include <sstream>
+#include <string>
 #include <list>
 
-using std::queue;
-using std::vector;
-using std::map;
+using std::list;
 using std::string;
-using std::ifstream;
+using std::cerr;
+using std::endl;
 using std::getline;
-using std::istringstream;
-using std::stoi;
+using std::ifstream;
 
-class Loader 
-{
-    public:
-        static queue<std::string> readFile(const string &filename);
-};
+list<string> loadInstructions(const string& filename);
+void processInstructions(const std::list<std::string>& instructions);
 
-#endif // FILE_READER_H
+#endif  // LOADER_H

@@ -1,39 +1,60 @@
+//include statements (file)
+#include "../includes/Allocation.h"
 #include "../includes/Loader.h"
+#include "../includes/Syscall.h"
 
 using std::string;
-using std::endl;
-using std::ifstream;
-using std::queue;
+using std::list;
 using std::cerr;
+using std::endl;
+using std::size_t;
+using std::stoul;
 using std::cout;
+using std::ifstream;
 
-struct allocation {
-    std::size_t size;
-    void *space;
-};
-
-
-std::list<allocation> occupied_mem;
-std::list<allocation> free_mem;
-
+//global variables
+list<Allocation> allocatedList;
+list<Allocation> freeList;
 
 
 
 int main(int argc, char* argv[]) 
 {
-
-    string filename = argv[1];
-    ifstream inputFile(filename);
-
-    if (!inputFile)
+    //check for number of arguments in execution of program, if not equal to two then exit
+    if (argc != 2) 
     {
-        cerr << "Error: Unable to open file " << filename << endl;
+        cerr << "Usage: " << argv[0] << " <input_filename>" << endl;
+        return 1;
+    }
+    
+    //init a string variable to hold the filename
+    string filename = argv[1];
+
+    //Check if file exists in FS, if false exit program
+    ifstream file(filename);
+    if(!file.good())
+    {
+        cerr << "Error: File '" << filename << "' not found." << endl;
         return 1;
     }
 
-    queue<std::string> processes = Loader::readFile(filename);
+    //pass in the filename to loadinstructions to get instructions and load into linkedlist
+    list<string> instructions = loadInstructions(filename);
+    //pass linkedlist full of instructions and execute them in processInstructions by using dealloc and alloc
+    processInstructions(instructions);
 
-    
+    //print allocated list
+    cout << "Allocated List:" << endl;
+    for (const auto& allocation : allocatedList) 
+    {
+        cout << "  Size: " << allocation.size << ", Space: " << allocation.space << endl;
+    }
+    //print deallocated list
+    cout << "Free List:" << endl;
+    for (const auto& allocation : freeList) 
+    {
+       cout << "  Size: " << allocation.size << ", Space: " << allocation.space << endl;
+    }
 
     return 0;
 }

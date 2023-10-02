@@ -1,13 +1,14 @@
 CXX = g++
-CXXFLAGS = -Wall -Werror -std=c++17
+CXXFLAGS = -std=c++11
+SRC_FILES = src/main.cpp src/Loader.cpp src/Syscall.cpp
+OBJ_FILES = $(SRC_FILES:.cpp=.o)
+EXECUTABLE = firstfit
 
-all: firstfit bestfit
+$(EXECUTABLE): $(OBJ_FILES)
+	$(CXX) $(CXXFLAGS) $(OBJ_FILES) -o $(EXECUTABLE)
 
-firstfit: src/main.cpp src/Loader.cpp
-	$(CXX) $(CXXFLAGS) -o firstfit src/main.cpp src/Loader.cpp
-
-bestfit: src/main.cpp src/Loader.cpp
-	$(CXX) $(CXXFLAGS) -o bestfit src/main.cpp src/Loader.cpp
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f firstfit bestfit
+	rm -f $(OBJ_FILES) $(EXECUTABLE)

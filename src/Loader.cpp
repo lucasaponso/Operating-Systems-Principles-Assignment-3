@@ -1,17 +1,58 @@
+//include statements (file)
 #include "../includes/Loader.h"
-
-queue<std::string> Loader::readFile(const string &filename)
-{
-    queue<std::string> sequences;
-    string line;
+#include "../includes/Allocation.h"
+#include <iostream> // Include any other necessary headers here
+list<string> loadInstructions(const string& filename) {
+    list<string> instructions;
     ifstream inputFile(filename);
 
-    while (getline(inputFile, line)) 
-    {
-        istringstream ss(line);
-        string key, value;
-        std::cout << line << std::endl;
+    if (!inputFile) {
+        cerr << "Error: Unable to open file " << filename << endl;
+        return instructions;
     }
+
+    string line;
+    while (getline(inputFile, line)) {
+        instructions.push_back(line);
+    }
+
     inputFile.close();
-    return sequences;
+    return instructions;
 }
+
+void processInstructions(const list<string>& instructions) 
+{
+    for (const string& instruction : instructions) 
+    {
+        if (instruction.find("alloc:") != string::npos) 
+        {
+            size_t chunk_size = stoul(instruction.substr(7));
+            void* allocated_memory = alloc(chunk_size);
+            if (allocated_memory == nullptr) 
+            {
+                cerr << "Error: Memory allocation failed." << endl;
+            }
+        } 
+        else if (instruction == "dealloc") 
+        {
+            if (!allocatedList.empty()) 
+            {
+                void* memory_to_deallocate = allocatedList.back().space;
+                dealloc(memory_to_deallocate);
+            } 
+            else 
+            {
+                cerr << "Error: No memory chunks to deallocate." << endl;
+            }
+        } 
+        else 
+        {
+            cerr << "Error: Invalid instruction in input file: " << instruction << endl;
+        }
+    }
+}
+
+
+
+
+
