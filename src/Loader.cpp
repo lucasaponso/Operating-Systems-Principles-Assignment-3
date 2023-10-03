@@ -27,7 +27,6 @@ list<string> loadInstructions(const string& filename) {
 
 void processInstructions(const list<string>& instructions, string mem_strategy) 
 {
-    std::cout << mem_strategy << std::endl;
     for (const string& instruction : instructions) 
     {
         if (instruction.find("alloc:") != string::npos) 
