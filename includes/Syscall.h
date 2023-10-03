@@ -15,6 +15,8 @@ using std::cerr;
 using std::endl;
 
 void* alloc(std::size_t chunk_size);
+void* bestfit_alloc(std::size_t chunk_size);
 void dealloc(void* chunk);
+
 
 #endif // SYSCALL_H

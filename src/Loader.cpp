@@ -1,7 +1,12 @@
 //include statements (file)
 #include "../includes/Loader.h"
 #include "../includes/Allocation.h"
-#include <iostream> // Include any other necessary headers here
+#include "../includes/Syscall.h"  // Include the Syscall header
+#include <iostream>
+#include <list>
+#include <fstream>
+#include <string>
+
 list<string> loadInstructions(const string& filename) {
     list<string> instructions;
     ifstream inputFile(filename);
@@ -20,14 +25,25 @@ list<string> loadInstructions(const string& filename) {
     return instructions;
 }
 
-void processInstructions(const list<string>& instructions) 
+void processInstructions(const list<string>& instructions, string mem_strategy) 
 {
+    std::cout << mem_strategy << std::endl;
     for (const string& instruction : instructions) 
     {
         if (instruction.find("alloc:") != string::npos) 
         {
             size_t chunk_size = stoul(instruction.substr(7));
-            void* allocated_memory = alloc(chunk_size);
+            void* allocated_memory = nullptr;  // Declare allocated_memory here
+
+            if (mem_strategy == "./bestfit")
+            {
+                allocated_memory = bestfit_alloc(chunk_size);
+            }
+            else if (mem_strategy == "./firstfit")
+            {
+                allocated_memory = alloc(chunk_size);
+            }
+            
             if (allocated_memory == nullptr) 
             {
                 cerr << "Error: Memory allocation failed." << endl;
@@ -51,8 +67,3 @@ void processInstructions(const list<string>& instructions)
         }
     }
 }
-
-
-
-
-

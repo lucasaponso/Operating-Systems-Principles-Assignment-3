@@ -13,6 +13,7 @@ extern std::list<Allocation> allocatedList;
 extern std::list<Allocation> freeList;
 
 void* alloc(std::size_t chunk_size);
+void* bestfir_alloc(std::size_t chunk_size);
 void dealloc(void* chunk);
 
 #endif

@@ -29,6 +29,7 @@ int main(int argc, char* argv[])
     
     //init a string variable to hold the filename
     string filename = argv[1];
+    string strategy = argv[0];
 
     //Check if file exists in FS, if false exit program
     ifstream file(filename);
@@ -41,7 +42,7 @@ int main(int argc, char* argv[])
     //pass in the filename to loadinstructions to get instructions and load into linkedlist
     list<string> instructions = loadInstructions(filename);
     //pass linkedlist full of instructions and execute them in processInstructions by using dealloc and alloc
-    processInstructions(instructions);
+    processInstructions(instructions, strategy);
 
     //print allocated list
     cout << "Allocated List:" << endl;

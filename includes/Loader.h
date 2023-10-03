@@ -14,6 +14,6 @@ using std::getline;
 using std::ifstream;
 
 list<string> loadInstructions(const string& filename);
-void processInstructions(const std::list<std::string>& instructions);
+void processInstructions(const std::list<std::string>& instructions, string mem_strategy);
 
 #endif  // LOADER_H
