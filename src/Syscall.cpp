@@ -48,27 +48,35 @@ void* alloc(std::size_t chunk_size)
     return new_space;
 }
 
-void* bestfit_alloc(std::size_t chunk_size) {
-    if (chunk_size == 0) {
+void* bestfit_alloc(std::size_t chunk_size) 
+{
+    if (chunk_size == 0) 
+    {
         return nullptr;
     }
 
     auto best_it = freeList.end();  // Initialize to the end of the freeList.
     std::size_t best_size = std::numeric_limits<std::size_t>::max();  // Initialize to a very large value.
 
-    for (auto it = freeList.begin(); it != freeList.end(); ++it) {
-        if (it->size >= chunk_size && it->size < best_size) {
+    for (auto it = freeList.begin(); it != freeList.end(); ++it) 
+    {
+        if (it->size >= chunk_size && it->size < best_size) 
+        {
             best_it = it;
             best_size = it->size;
         }
     }
 
-    if (best_it != freeList.end()) {
+    if (best_it != freeList.end()) 
+    {
         void* allocated_space = best_it->space;
 
-        if (best_it->size == chunk_size) {
+        if (best_it->size == chunk_size) 
+        {
             freeList.erase(best_it);
-        } else {
+        } 
+        else 
+        {
             best_it->size -= chunk_size;
             best_it->space = static_cast<char*>(best_it->space) + chunk_size;
         }
@@ -82,7 +90,8 @@ void* bestfit_alloc(std::size_t chunk_size) {
     }
 
     void* new_space = sbrk(chunk_size);
-    if (new_space == reinterpret_cast<void*>(-1)) {
+    if (new_space == reinterpret_cast<void*>(-1)) 
+    {
         return nullptr;
     }
 
