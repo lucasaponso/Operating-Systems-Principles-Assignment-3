@@ -2,10 +2,7 @@
 #include "../includes/Loader.h"
 #include "../includes/Allocation.h"
 #include "../includes/Syscall.h"  // Include the Syscall header
-#include <iostream>
-#include <list>
-#include <fstream>
-#include <string>
+
 
 list<string> loadInstructions(const string& filename) {
     list<string> instructions;

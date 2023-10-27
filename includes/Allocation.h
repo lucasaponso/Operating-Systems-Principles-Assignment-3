@@ -5,6 +5,7 @@
 #include <list>
 
 struct Allocation {
+    std::size_t num_bytes;
     std::size_t size;
     void* space;
 };

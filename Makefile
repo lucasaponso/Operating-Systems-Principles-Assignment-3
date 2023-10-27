@@ -11,9 +11,6 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
 # Create a list of object files by replacing .cpp with .o
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
-# By default, use "firstfit" strategy
-all: $(EXECUTABLE_FIRSTFIT)
-
 # Rule to compile with "firstfit" strategy
 $(EXECUTABLE_FIRSTFIT): CXXFLAGS += -DFIRSTFIT
 $(EXECUTABLE_FIRSTFIT): $(OBJ_FILES)
@@ -31,6 +28,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 # Create the obj/ directory if it doesn't exist
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+
+# Add an "all" target that depends on both executables
+all: $(EXECUTABLE_FIRSTFIT) $(EXECUTABLE_BESTFIT)
 
 clean:
 	rm -f $(OBJ_FILES) $(EXECUTABLE_FIRSTFIT) $(EXECUTABLE_BESTFIT)

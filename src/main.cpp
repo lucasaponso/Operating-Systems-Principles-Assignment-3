@@ -3,6 +3,7 @@
 #include "../includes/Loader.h"
 #include "../includes/Syscall.h"
 
+
 using std::string;
 using std::list;
 using std::cerr;
@@ -43,19 +44,17 @@ int main(int argc, char* argv[])
     list<string> instructions = loadInstructions(filename);
     //pass linkedlist full of instructions and execute them in processInstructions by using dealloc and alloc
     processInstructions(instructions, strategy);
-
-    //print allocated list
-    cout << "Allocated List:" << endl;
-    for (const auto& allocation : allocatedList) 
-    {
-        cout << "  Size: " << allocation.size << ", Space: " << allocation.space << endl;
-    }
-    //print deallocated list
-    cout << "Free List:" << endl;
-    for (const auto& allocation : freeList) 
-    {
-       cout << "  Size: " << allocation.size << ", Space: " << allocation.space << endl;
-    }
-
+// In your main.cpp, update the printing of allocated and free lists
+cout << "Allocated List:" << endl;
+for (const auto& allocation : allocatedList) 
+{
+    cout << "  Size: " << allocation.size << ", Space: " << allocation.space <<  ", Bytes: " << allocation.num_bytes << endl;
+}
+// Print the free list
+cout << "Free List:" << endl;
+for (const auto& allocation : freeList) 
+{
+   cout << "  Size: " << allocation.size << ", Space: " << allocation.space <<  ", Bytes: " << allocation.num_bytes << endl;
+}
     return 0;
 }
